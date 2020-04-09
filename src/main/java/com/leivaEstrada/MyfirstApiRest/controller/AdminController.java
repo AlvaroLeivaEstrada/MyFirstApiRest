@@ -17,6 +17,7 @@ import com.mycompany.dependencyproyect1.dao.repository.ProgramaRepository;
 import com.mycompany.dependencyproyect1.dao.repository.TipoDiscoRepository;
 import com.mycompany.dependencyproyect1.dao.repository.TipoDocumentoRepository;
 import com.mycompany.dependencyproyect1.dao.repository.TipoFormatoRepository;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import com.mycompany.dependencyproyect1.dao.entity.TipoDisco;
+import com.mycompany.dependencyproyect1.dao.entity.TipoFormato;
+import java.util.List;
 
 /**
  *
@@ -39,7 +43,9 @@ public class AdminController {
     TipoFormatoRepository tipoFormatoHandler = new TipoFormatoRepository();
     TipoDocumentoRepository tipoDocumentoHandler = new TipoDocumentoRepository();
     AsignaturaRespository asignaturaHandler = new AsignaturaRespository();
-    
+
+    TipoDiscoRepository tipoDisco = new TipoDiscoRepository();
+    TipoFormatoRepository tipoFormato = new TipoFormatoRepository();
 
     @GetMapping(path = "/usuario/{usu}")
     private String getNombre(@PathVariable String usu) {
@@ -49,12 +55,26 @@ public class AdminController {
 
     }
 
+    @GetMapping(path = "/admin/tipodiscos/findAll")
+    private List<TipoDisco> listTipoDiscos() {
+        List<TipoDisco> listTipoDisco = tipoDisco.findAll();
+        return listTipoDisco;
+
+    }
+
+    @GetMapping(path = "/admin/tipoformatos/findAll")
+    private List<TipoFormato> listTipoFormato() {
+        List<TipoFormato> listTipoFormato = tipoFormato.findAll();
+        return listTipoFormato;
+
+    }
+
     @PostMapping(path = "/admin/directorio")
     private String getNombre(@RequestBody Directorio directorio) {
-        
+
         directorioHandler.save(directorio.getNombre());
 
-        return directorio.getNombre()+ " Almacenado en BD";
+        return directorio.getNombre() + " Almacenado en BD";
 
     }
 
@@ -62,15 +82,15 @@ public class AdminController {
     private String getNombre(@RequestBody TipoDisco tipoDisco) {
         tipoDiscoHandler.save(tipoDisco.getNombre());
 
-        return tipoDisco.getNombre()+" Almacenado en BD";
+        return tipoDisco.getNombre() + " Almacenado en BD";
 
     }
 
     @PostMapping(path = "/admin/programa")
     private String getNombre(@RequestBody Programa programa) {
-        programaHandler.save(programa.getNombre(),programa.getNombrecorto(),programa.getVersion(),programa.getFabricante());
+        programaHandler.save(programa.getNombre(), programa.getNombrecorto(), programa.getVersion(), programa.getFabricante());
 
-        return programa.getNombre()+" Programa Almacenado en BD";
+        return programa.getNombre() + " Programa Almacenado en BD";
 
     }
 
@@ -86,6 +106,7 @@ public class AdminController {
         tipoDocumentoHandler.save(tipoDocumento.getNombre());
         return " Almacenado en BD";
     }
+
     @PostMapping(path = "/admin/asignatura")
     private String getNombre(@RequestBody Asignatura asigantura) {
         asignaturaHandler.save(asigantura);
