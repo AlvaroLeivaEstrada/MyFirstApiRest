@@ -5,10 +5,13 @@
  */
 package com.leivaEstrada.MyfirstApiRest.controller;
 
+import org.springframework.web.bind.annotation.RestController;
+
 /**
  *
  * @author fercholeiva
  */
+@RestController
 public class DocumentoController {
     
 }
